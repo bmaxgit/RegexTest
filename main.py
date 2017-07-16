@@ -5,6 +5,9 @@ class MyFirstGUI:
         self.master = master
         master.title("Title")
 
+        self.label = Label(master, text="This is our first GUI!")
+        self.label.pack(side=TOP)
+
         # Input frame
         self.inputFrame=Frame(master)
         self.inputFrame.pack(side=TOP)
@@ -56,22 +59,19 @@ class MyFirstGUI:
         self.outputScroll.pack(side=RIGHT, fill=Y)
 
         # Group frame
-        self.outputGroupFrame = Frame(self.outputFrame)
+        self.outputGroupFrame = Frame(master)
         self.outputGroupFrame.pack()
 
         # Button frame
         self.buttonFrame = Frame(master)
         self.buttonFrame.pack()
 
-
-
-        # self.xlabel = []
-        # for i in range(5):
-        #     self.xlabel.append(Label(self.inputFrame, text=str(i)))
-        #     self.xlabel[i].pack()
-        #
-        # self.label = Label(master, text="This is our first GUI!")
-        # self.label.pack(side=TOP)
+        groupButton = []
+        self.outputGroupButton = []
+        for i in range(10):
+            groupButton.append(IntVar(False))
+            self.outputGroupButton.append(Checkbutton(self.outputGroupFrame, text=i, var=groupButton[i]))
+            self.outputGroupButton[i].pack(side=LEFT)
 
 
 
