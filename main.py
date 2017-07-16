@@ -33,12 +33,12 @@ class RegexTestGUI:
         self.regexFlagFrame = Frame(master)
         self.regexFlagFrame.pack()
 
-        self.flagMultilineVar = IntVar(value=False)
+        self.flagMultilineVar = BooleanVar(value=False)
 
         self.flagMultiline = Checkbutton(self.regexFlagFrame, text="Multiline", var=self.flagMultilineVar)
         self.flagMultiline.pack(side=RIGHT)
 
-        self.flagNoCaseVar = IntVar(value=False)
+        self.flagNoCaseVar = BooleanVar(value=False)
 
         self.flagNoCase = Checkbutton(self.regexFlagFrame, text="NoCase", var=self.flagNoCaseVar)
         self.flagNoCase.pack(side=RIGHT)
@@ -61,7 +61,7 @@ class RegexTestGUI:
         self.groupButton = []
         self.outputGroupButton = []
         for i in range(10):
-            self.groupButton.append(IntVar(False))
+            self.groupButton.append(BooleanVar(value=False))
             self.outputGroupButton.append(Checkbutton(self.outputGroupFrame, text=i, var=self.groupButton[i]))
             self.outputGroupButton[i].pack(side=LEFT)
             self.outputGroupFrame.pack()
@@ -79,6 +79,13 @@ class RegexTestGUI:
         self.exitButton.pack()
 
     def execute(self):
+        for i in range(10):
+            print "Group ", i, " is ", self.groupButton[i].get()
+        print "Multi is ", self.flagMultilineVar.get()
+        print "NoCase is ", self.flagNoCaseVar.get()
+        print "Input is [", self.inputText.get('1.0', 'end-1c'), "]"
+        print "Regex is [", self.regexText.get('1.0', 'end-1c'), "]"
+        print "Output is [", self.outputText.get('1.0', 'end-1c'), "]"
         print("Executing!")
 
 root = Tk()
