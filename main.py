@@ -63,9 +63,9 @@ class RegexTestGUI:
 
         self.groupButton = []
         self.outputGroupButton = []
-        for i in range(10):
+        for i in range(9):
             self.groupButton.append(BooleanVar(value=False))
-            self.outputGroupButton.append(Checkbutton(self.outputGroupFrame, text=i, var=self.groupButton[i]))
+            self.outputGroupButton.append(Checkbutton(self.outputGroupFrame, text=i+1, var=self.groupButton[i]))
             self.outputGroupButton[i].pack(side=LEFT)
             self.outputGroupFrame.pack()
 
@@ -82,16 +82,19 @@ class RegexTestGUI:
         self.exitButton.pack()
 
     def execute(self):
-        for i in range(10):
-            print "Group ", i, " is ", self.groupButton[i].get()
+        print("Executing!")
+
+        print "Input is [", self.inputText.get('1.0', 'end-1c'), "]"
+        inputText = self.inputText.get('1.0', 'end-1c')
+
+        print "Regex is [", self.regexText.get('1.0', 'end-1c'), "]"
+        regexText = self.regexText.get('1.0', 'end-1c')
+
+        print "Output is [", self.outputText.get('1.0', 'end-1c'), "]"
+
         print "Multi is ", self.flagMultilineVar.get()
         print "IgnoreCase is ", self.flagIgnoreCaseVar.get()
         print "DotAll is ", self.flagDotAllVar.get()
-        print "Input is [", self.inputText.get('1.0', 'end-1c'), "]"
-        print "Regex is [", self.regexText.get('1.0', 'end-1c'), "]"
-        print "Output is [", self.outputText.get('1.0', 'end-1c'), "]"
-        print("Executing!")
-
         regexFlag = 0
         if self.flagMultilineVar.get() is True:
             regexFlag |= re.MULTILINE
@@ -100,11 +103,20 @@ class RegexTestGUI:
         if self.flagDotAllVar.get() is True:
             regexFlag |= re.DOTALL
 
+        result = re.match(regexText, inputText, regexFlag)
+        if result:
+            print "Match!"
+            self.outputText.delete(1.0, END)
+            self.outputText.insert(END, result.group(0))
+            self.outputText.insert(END, "\n")
 
-        inputText = self.inputText.get('1.0', 'end-1c')
-        regexText = self.regexText.get('1.0', 'end-1c')
-
-        result = re.match(regexText, inputText, regexFlag )
+            for i in range(9):
+                print "Group ", i + 1, " is ", self.groupButton[i].get()
+                if self.groupButton[i].get():
+                    self.outputText.insert(END, i+1)
+                    self.outputText.insert(END, ": [")
+                    self.outputText.insert(END, result.group(i+1))
+                    self.outputText.insert(END, "]\n")
 
 
 
