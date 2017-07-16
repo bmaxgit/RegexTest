@@ -1,9 +1,10 @@
 from Tkinter import *
+import re
 
 class RegexTestGUI:
     def __init__(self, master):
         self.master = master
-        master.title("Title")
+        master.title("RegexTest")
 
         # Input frame
         self.inputFrame=Frame(master)
@@ -34,14 +35,16 @@ class RegexTestGUI:
         self.regexFlagFrame.pack()
 
         self.flagMultilineVar = BooleanVar(value=False)
-
         self.flagMultiline = Checkbutton(self.regexFlagFrame, text="Multiline", var=self.flagMultilineVar)
         self.flagMultiline.pack(side=RIGHT)
 
-        self.flagNoCaseVar = BooleanVar(value=False)
+        self.flagIgnoreCaseVar = BooleanVar(value=False)
+        self.flagIgnoreCase = Checkbutton(self.regexFlagFrame, text="IgnoreCase", var=self.flagIgnoreCaseVar)
+        self.flagIgnoreCase.pack(side=RIGHT)
 
-        self.flagNoCase = Checkbutton(self.regexFlagFrame, text="NoCase", var=self.flagNoCaseVar)
-        self.flagNoCase.pack(side=RIGHT)
+        self.flagDotAllVar = BooleanVar(value=False)
+        self.flagDotAll = Checkbutton(self.regexFlagFrame, text="DotAll", var=self.flagDotAllVar)
+        self.flagDotAll.pack(side=RIGHT)
 
         # Output frame
         self.outputFrame = Frame(master)
@@ -82,11 +85,29 @@ class RegexTestGUI:
         for i in range(10):
             print "Group ", i, " is ", self.groupButton[i].get()
         print "Multi is ", self.flagMultilineVar.get()
-        print "NoCase is ", self.flagNoCaseVar.get()
+        print "IgnoreCase is ", self.flagIgnoreCaseVar.get()
+        print "DotAll is ", self.flagDotAllVar.get()
         print "Input is [", self.inputText.get('1.0', 'end-1c'), "]"
         print "Regex is [", self.regexText.get('1.0', 'end-1c'), "]"
         print "Output is [", self.outputText.get('1.0', 'end-1c'), "]"
         print("Executing!")
+
+        regexFlag = 0
+        if self.flagMultilineVar.get() is True:
+            regexFlag |= re.MULTILINE
+        if self.flagIgnoreCaseVar.get() is True:
+            regexFlag |= re.IGNORECASE
+        if self.flagDotAllVar.get() is True:
+            regexFlag |= re.DOTALL
+
+
+        inputText = self.inputText.get('1.0', 'end-1c')
+        regexText = self.regexText.get('1.0', 'end-1c')
+
+        result = re.match(regexText, inputText, regexFlag )
+
+
+
 
 root = Tk()
 my_gui = RegexTestGUI(root)
