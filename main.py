@@ -47,6 +47,14 @@ class MyFirstGUI:
         self.outputFrame = Frame(master)
         self.outputFrame.pack()
 
+        self.outputText = Text(self.outputFrame, height=10, width=80)
+        self.outputText.insert(END, "")
+        self.outputText.pack(side=LEFT)
+
+        self.outputScroll = Scrollbar(self.outputFrame, command=self.outputText.yview)
+        self.outputText.configure(yscrollcommand=self.outputScroll.set)
+        self.outputScroll.pack(side=RIGHT, fill=Y)
+
         # Group frame
         self.outputGroupFrame = Frame(self.outputFrame)
         self.outputGroupFrame.pack()
