@@ -1,12 +1,9 @@
 from Tkinter import *
 
-class MyFirstGUI:
+class RegexTestGUI:
     def __init__(self, master):
         self.master = master
         master.title("Title")
-
-        self.label = Label(master, text="This is our first GUI!")
-        self.label.pack(side=TOP)
 
         # Input frame
         self.inputFrame=Frame(master)
@@ -36,14 +33,14 @@ class MyFirstGUI:
         self.regexFlagFrame = Frame(master)
         self.regexFlagFrame.pack()
 
-        flagMultilineVar = IntVar(value=False)
+        self.flagMultilineVar = IntVar(value=False)
 
-        self.flagMultiline = Checkbutton(self.regexFlagFrame, text="Multiline", var=flagMultilineVar)
+        self.flagMultiline = Checkbutton(self.regexFlagFrame, text="Multiline", var=self.flagMultilineVar)
         self.flagMultiline.pack(side=RIGHT)
 
-        flagNoCaseVar = IntVar(value=False)
+        self.flagNoCaseVar = IntVar(value=False)
 
-        self.flagNoCase = Checkbutton(self.regexFlagFrame, text="NoCase", var=flagNoCaseVar)
+        self.flagNoCase = Checkbutton(self.regexFlagFrame, text="NoCase", var=self.flagNoCaseVar)
         self.flagNoCase.pack(side=RIGHT)
 
         # Output frame
@@ -60,32 +57,30 @@ class MyFirstGUI:
 
         # Group frame
         self.outputGroupFrame = Frame(master)
-        self.outputGroupFrame.pack()
+
+        self.groupButton = []
+        self.outputGroupButton = []
+        for i in range(10):
+            self.groupButton.append(IntVar(False))
+            self.outputGroupButton.append(Checkbutton(self.outputGroupFrame, text=i, var=self.groupButton[i]))
+            self.outputGroupButton[i].pack(side=LEFT)
+            self.outputGroupFrame.pack()
 
         # Button frame
         self.buttonFrame = Frame(master)
         self.buttonFrame.pack()
 
-        groupButton = []
-        self.outputGroupButton = []
-        for i in range(10):
-            groupButton.append(IntVar(False))
-            self.outputGroupButton.append(Checkbutton(self.outputGroupFrame, text=i, var=groupButton[i]))
-            self.outputGroupButton[i].pack(side=LEFT)
+        self.executeButton = Button(self.buttonFrame, text="Execute", command=self.execute)
+        self.executeButton.pack(side=LEFT)
+        self.executeButton.pack()
 
+        self.exitButton = Button(self.buttonFrame, text="Close", command=master.quit)
+        self.exitButton.pack(side=RIGHT)
+        self.exitButton.pack()
 
-
-        self.greet_button = Button(self.buttonFrame, text="Greet", command=self.greet)
-        self.greet_button.pack(side=LEFT)
-        self.greet_button.pack()
-
-        self.close_button = Button(self.buttonFrame, text="Close", command=master.quit)
-        self.close_button.pack(side=RIGHT)
-        self.close_button.pack()
-
-    def greet(self):
-        print("Greetings!")
+    def execute(self):
+        print("Executing!")
 
 root = Tk()
-my_gui = MyFirstGUI(root)
+my_gui = RegexTestGUI(root)
 root.mainloop()
