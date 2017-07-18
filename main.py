@@ -95,19 +95,10 @@ class RegexTestGUI:
         self.exitButton.pack()
 
     def execute(self):
-        print("Executing!")
 
-        print "Input is [", self.inputText.get('1.0', 'end-1c'), "]"
         input_text = self.inputText.get('1.0', 'end-1c')
-
-        print "Regex is [", self.regexText.get('1.0', 'end-1c'), "]"
         regex_text = self.regexText.get('1.0', 'end-1c')
 
-        print "Output is [", self.outputText.get('1.0', 'end-1c'), "]"
-
-        print "Multi is ", self.flagMultilineVar.get()
-        print "IgnoreCase is ", self.flagIgnoreCaseVar.get()
-        print "DotAll is ", self.flagDotAllVar.get()
         regex_flag = 0
         if self.flagMultilineVar.get() is True:
             regex_flag |= re.MULTILINE
@@ -118,7 +109,6 @@ class RegexTestGUI:
 
         result = re.match(regex_text, input_text, regex_flag)
         if result:
-            print "Match!"
             self.outputText.delete(1.0, END)
             self.outputText.insert(END, result.group(0))
             self.outputText.insert(END, "\n")
