@@ -9,12 +9,12 @@ class RegexTestGUI:
 
         # Input frame
         self.inputFrame = Frame(master)
-        self.inputFrame.pack(side=TOP)
+        self.inputFrame.pack(side=TOP, fill=BOTH, expand=YES)
 
         # Input text
         self.inputText = Text(self.inputFrame, height=10, width=80)
         self.inputText.insert(END, "Insert test text")
-        self.inputText.pack(side=LEFT)
+        self.inputText.pack(side=LEFT, fill=BOTH, expand=YES)
 
         # Input scrollbar
         self.inputScroll = Scrollbar(self.inputFrame, command=self.inputText.yview)
@@ -23,12 +23,12 @@ class RegexTestGUI:
 
         # Regex frame
         self.regexFrame = Frame(master)
-        self.regexFrame.pack()
+        self.regexFrame.pack(fill=X)
 
         # Regex text
         self.regexText = Text(self.regexFrame, height=3, width=80)
         self.regexText.insert(END, "")
-        self.regexText.pack(side=LEFT)
+        self.regexText.pack(side=LEFT, fill=X, expand=YES)
 
         # Regex scrollbar
         self.regexScroll = Scrollbar(self.regexFrame, command=self.regexText.yview)
@@ -56,12 +56,12 @@ class RegexTestGUI:
 
         # Output frame
         self.outputFrame = Frame(master)
-        self.outputFrame.pack()
+        self.outputFrame.pack(fill=BOTH, expand=YES)
 
         # Output text
         self.outputText = Text(self.outputFrame, height=10, width=80)
         self.outputText.insert(END, "")
-        self.outputText.pack(side=LEFT)
+        self.outputText.pack(side=LEFT, fill=BOTH, expand=YES)
         self.outputText.bind("<Key>", lambda e: "break")
 
         # Output scrollbar
@@ -133,4 +133,8 @@ class RegexTestGUI:
 
 root = Tk()
 my_gui = RegexTestGUI(root)
+
+root.update()
+root.minsize(root.winfo_width(), root.winfo_height())
+
 root.mainloop()
