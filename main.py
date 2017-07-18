@@ -12,7 +12,7 @@ class RegexTestGUI:
         self.inputFrame.pack(side=TOP, fill=BOTH, expand=YES)
 
         # Input text
-        self.inputText = Text(self.inputFrame, height=10, width=80)
+        self.inputText = Text(self.inputFrame, height=5, width=60)
         self.inputText.insert(END, "Insert test text")
         self.inputText.pack(side=LEFT, fill=BOTH, expand=YES)
 
@@ -26,7 +26,7 @@ class RegexTestGUI:
         self.regexFrame.pack(fill=X)
 
         # Regex text
-        self.regexText = Text(self.regexFrame, height=3, width=80)
+        self.regexText = Text(self.regexFrame, height=3, width=60)
         self.regexText.insert(END, "")
         self.regexText.pack(side=LEFT, fill=X, expand=YES)
 
@@ -37,29 +37,29 @@ class RegexTestGUI:
 
         # Flag frame
         self.regexFlagFrame = Frame(master)
-        self.regexFlagFrame.pack()
+        self.regexFlagFrame.pack(anchor=W)
 
         # Flag multiline
         self.flagMultilineVar = BooleanVar(value=False)
         self.flagMultiline = Checkbutton(self.regexFlagFrame, text="Multiline", var=self.flagMultilineVar)
-        self.flagMultiline.pack(side=RIGHT)
+        self.flagMultiline.pack(side=LEFT)
 
         # Flag ignorecase
         self.flagIgnoreCaseVar = BooleanVar(value=False)
         self.flagIgnoreCase = Checkbutton(self.regexFlagFrame, text="IgnoreCase", var=self.flagIgnoreCaseVar)
-        self.flagIgnoreCase.pack(side=RIGHT)
+        self.flagIgnoreCase.pack(side=LEFT)
 
         # Flag dotall
         self.flagDotAllVar = BooleanVar(value=False)
         self.flagDotAll = Checkbutton(self.regexFlagFrame, text="DotAll", var=self.flagDotAllVar)
-        self.flagDotAll.pack(side=RIGHT)
+        self.flagDotAll.pack(side=LEFT)
 
         # Output frame
         self.outputFrame = Frame(master)
         self.outputFrame.pack(fill=BOTH, expand=YES)
 
         # Output text
-        self.outputText = Text(self.outputFrame, height=10, width=80)
+        self.outputText = Text(self.outputFrame, height=5, width=60)
         self.outputText.insert(END, "")
         self.outputText.pack(side=LEFT, fill=BOTH, expand=YES)
         self.outputText.bind("<Key>", lambda e: "break")
@@ -71,6 +71,7 @@ class RegexTestGUI:
 
         # Group frame
         self.outputGroupFrame = Frame(master)
+        self.outputGroupFrame.pack(anchor=W)
 
         # Group checkboxes
         self.groupCheckboxVar = []
@@ -79,21 +80,18 @@ class RegexTestGUI:
             self.groupCheckboxVar.append(BooleanVar(value=False))
             self.outputGroupCheckbox.append(Checkbutton(self.outputGroupFrame, text=i + 1, var=self.groupCheckboxVar[i], state=DISABLED))
             self.outputGroupCheckbox[i].pack(side=LEFT)
-            self.outputGroupFrame.pack()
 
         # Button frame
         self.buttonFrame = Frame(master)
-        self.buttonFrame.pack()
+        self.buttonFrame.pack(side=BOTTOM)
 
         # Execute button
         self.executeButton = Button(self.buttonFrame, text="Execute", command=self.execute)
         self.executeButton.pack(side=LEFT)
-        self.executeButton.pack()
 
         # Exit button
         self.exitButton = Button(self.buttonFrame, text="Close", command=master.quit)
-        self.exitButton.pack(side=RIGHT)
-        self.exitButton.pack()
+        self.exitButton.pack(side=LEFT)
 
     def execute(self):
 
