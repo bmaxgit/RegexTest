@@ -62,6 +62,7 @@ class RegexTestGUI:
         self.outputText = Text(self.outputFrame, height=10, width=80)
         self.outputText.insert(END, "")
         self.outputText.pack(side=LEFT)
+        self.outputText.bind("<Key>", lambda e: "break")
 
         # Output scrollbar
         self.outputScroll = Scrollbar(self.outputFrame, command=self.outputText.yview)
@@ -72,24 +73,24 @@ class RegexTestGUI:
         self.outputGroupFrame = Frame(master)
 
         # Group checkboxes
-        self.groupButton = []
-        self.outputGroupButton = []
+        self.groupCheckboxVar = []
+        self.outputGroupCheckbox = []
         for i in range(9):
-            self.groupButton.append(BooleanVar(value=False))
-            self.outputGroupButton.append(Checkbutton(self.outputGroupFrame, text=i+1, var=self.groupButton[i]))
-            self.outputGroupButton[i].pack(side=LEFT)
+            self.groupCheckboxVar.append(BooleanVar(value=False))
+            self.outputGroupCheckbox.append(Checkbutton(self.outputGroupFrame, text=i + 1, var=self.groupCheckboxVar[i], state=DISABLED))
+            self.outputGroupCheckbox[i].pack(side=LEFT)
             self.outputGroupFrame.pack()
 
         # Button frame
         self.buttonFrame = Frame(master)
         self.buttonFrame.pack()
 
-        # Execute frame
+        # Execute button
         self.executeButton = Button(self.buttonFrame, text="Execute", command=self.execute)
         self.executeButton.pack(side=LEFT)
         self.executeButton.pack()
 
-        # Exit frame
+        # Exit button
         self.exitButton = Button(self.buttonFrame, text="Close", command=master.quit)
         self.exitButton.pack(side=RIGHT)
         self.exitButton.pack()
@@ -108,18 +109,26 @@ class RegexTestGUI:
             regex_flag |= re.DOTALL
 
         result = re.match(regex_text, input_text, regex_flag)
+        self.outputText.delete(1.0, END)
         if result:
-            self.outputText.delete(1.0, END)
             self.outputText.insert(END, result.group(0))
             self.outputText.insert(END, "\n")
 
             for i in range(9):
-                print "Group ", i + 1, " is ", self.groupButton[i].get()
-                if self.groupButton[i].get():
-                    self.outputText.insert(END, i+1)
-                    self.outputText.insert(END, ": [")
-                    self.outputText.insert(END, result.group(i+1))
-                    self.outputText.insert(END, "]\n")
+                try:
+                    group_text = result.group(i+1)
+                    self.outputGroupCheckbox[i].configure(state='normal')
+                    if self.groupCheckboxVar[i].get():
+                        self.outputText.insert(END, i+1)
+                        self.outputText.insert(END, ": [")
+                        self.outputText.insert(END, group_text)
+                        self.outputText.insert(END, "]\n")
+                except IndexError:
+                    self.outputGroupCheckbox[i].configure(state='disabled')
+                    self.groupCheckboxVar[i].set(False)
+        else:
+            for i in range(9):
+                self.outputGroupCheckbox[i].configure(state='disabled')
 
 
 root = Tk()
