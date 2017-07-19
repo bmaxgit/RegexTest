@@ -3,17 +3,17 @@ import re
 
 
 # Flag function
-def getcheckbox(parent, name):
-    var = BooleanVar(value=False)
-    box = Checkbutton(parent, text=name, var=var)
-    box.pack(side=LEFT)
-    return box, var
-
-
 class RegexTestGUI:
     def __init__(self, master):
         self.master = master
         master.title("RegexTest")
+
+        def button1callback(event):
+            print 'callback event', event
+            self.execute()
+
+        self.master.bind('<Button-1>', button1callback)
+        self.master.bind('<Key>', button1callback)
 
         # Input frame
         self.inputFrame = Frame(master)
@@ -48,10 +48,10 @@ class RegexTestGUI:
         self.regexFlagFrame.pack(anchor=W)
 
         # Flags
-        self.flagMultiline, self.flagMultilineVar = getcheckbox(self.regexFlagFrame, "Multiline")
-        self.flagIgnoreCase, self.flagIgnoreCaseVar = getcheckbox(self.regexFlagFrame, "IgnoreCase")
-        self.flagDotAll, self.flagDotAllVar = getcheckbox(self.regexFlagFrame, "DotAll")
-        self.flagUnicode, self.flagUnicodeVar = getcheckbox(self.regexFlagFrame, "Unicode")
+        self.flagMultiline, self.flagMultilineVar = self.getcheckbox(self.regexFlagFrame, "Multiline")
+        self.flagIgnoreCase, self.flagIgnoreCaseVar = self.getcheckbox(self.regexFlagFrame, "IgnoreCase")
+        self.flagDotAll, self.flagDotAllVar = self.getcheckbox(self.regexFlagFrame, "DotAll")
+        self.flagUnicode, self.flagUnicodeVar = self.getcheckbox(self.regexFlagFrame, "Unicode")
 
         # Output frame
         self.outputFrame = Frame(master)
@@ -133,6 +133,14 @@ class RegexTestGUI:
         except Exception as error:
             self.outputText.delete(1.0, END)
             self.outputText.insert(END, 'Error: '+error.message)
+
+    def getcheckbox(self, parent, name):
+        var = BooleanVar(value=False)
+        box = Checkbutton(parent, text=name, var=var)
+        box.pack(side=LEFT)
+        return box, var
+
+
 
 
 root = Tk()
