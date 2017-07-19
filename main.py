@@ -108,7 +108,7 @@ class RegexTestGUI:
             regex_flag |= re.UNICODE
 
         try:
-            result = re.match(regex_text, input_text, regex_flag)
+            result = re.search(regex_text, input_text, regex_flag)
             self.outputText.delete(1.0, END)
             if result:
                 self.outputText.insert(END, result.group(0))
