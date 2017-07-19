@@ -2,7 +2,6 @@ from Tkinter import *
 import re
 
 
-# Flag function
 class RegexTestGUI:
     def __init__(self, master):
         self.master = master
@@ -123,6 +122,12 @@ class RegexTestGUI:
                             self.outputText.insert(END, ": [")
                             self.outputText.insert(END, group_text)
                             self.outputText.insert(END, "]\n")
+
+#                           Colorize group match
+#                           self.outputText.tag_add('group', '1.5', '1.10')
+#                           self.outputText.tag_add('group', '1.'.str(result.start(i+1)), '1.'.(result.end(i + 1)))
+#                           self.outputText.tag_config('group', background='yellow', foreground='red')
+
                     except IndexError:
                         self.outputGroupCheckbox[i].configure(state='disabled')
                         self.groupCheckboxVar[i].set(False)
@@ -134,6 +139,7 @@ class RegexTestGUI:
             self.outputText.delete(1.0, END)
             self.outputText.insert(END, 'Error: '+error.message)
 
+    # Flag function
     def getcheckbox(self, parent, name):
         var = BooleanVar(value=False)
         box = Checkbutton(parent, text=name, var=var)
