@@ -54,6 +54,11 @@ class RegexTestGUI:
         self.flagDotAll = Checkbutton(self.regexFlagFrame, text="DotAll", var=self.flagDotAllVar)
         self.flagDotAll.pack(side=LEFT)
 
+        # Flag unicode
+        self.flagUnicodeVar = BooleanVar(value=False)
+        self.flagUnicode = Checkbutton(self.regexFlagFrame, text="Unicode", var=self.flagUnicodeVar)
+        self.flagUnicode.pack(side=LEFT)
+
         # Output frame
         self.outputFrame = Frame(master)
         self.outputFrame.pack(fill=BOTH, expand=YES)
@@ -105,6 +110,8 @@ class RegexTestGUI:
             regex_flag |= re.IGNORECASE
         if self.flagDotAllVar.get() is True:
             regex_flag |= re.DOTALL
+        if self.flagUnicodeVar.get() is True:
+            regex_flag |= re.UNICODE
 
         result = re.match(regex_text, input_text, regex_flag)
         self.outputText.delete(1.0, END)
