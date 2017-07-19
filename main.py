@@ -2,6 +2,14 @@ from Tkinter import *
 import re
 
 
+# Flag function
+def getcheckbox(parent, name):
+    var = BooleanVar(value=False)
+    box = Checkbutton(parent, text=name, var=var)
+    box.pack(side=LEFT)
+    return box, var
+
+
 class RegexTestGUI:
     def __init__(self, master):
         self.master = master
@@ -39,25 +47,11 @@ class RegexTestGUI:
         self.regexFlagFrame = Frame(master)
         self.regexFlagFrame.pack(anchor=W)
 
-        # Flag multiline
-        self.flagMultilineVar = BooleanVar(value=False)
-        self.flagMultiline = Checkbutton(self.regexFlagFrame, text="Multiline", var=self.flagMultilineVar)
-        self.flagMultiline.pack(side=LEFT)
-
-        # Flag ignorecase
-        self.flagIgnoreCaseVar = BooleanVar(value=False)
-        self.flagIgnoreCase = Checkbutton(self.regexFlagFrame, text="IgnoreCase", var=self.flagIgnoreCaseVar)
-        self.flagIgnoreCase.pack(side=LEFT)
-
-        # Flag dotall
-        self.flagDotAllVar = BooleanVar(value=False)
-        self.flagDotAll = Checkbutton(self.regexFlagFrame, text="DotAll", var=self.flagDotAllVar)
-        self.flagDotAll.pack(side=LEFT)
-
-        # Flag unicode
-        self.flagUnicodeVar = BooleanVar(value=False)
-        self.flagUnicode = Checkbutton(self.regexFlagFrame, text="Unicode", var=self.flagUnicodeVar)
-        self.flagUnicode.pack(side=LEFT)
+        # Flags
+        self.flagMultiline, self.flagMultilineVar = getcheckbox(self.regexFlagFrame, "Multiline")
+        self.flagIgnoreCase, self.flagIgnoreCaseVar = getcheckbox(self.regexFlagFrame, "IgnoreCase")
+        self.flagDotAll, self.flagDotAllVar = getcheckbox(self.regexFlagFrame, "DotAll")
+        self.flagUnicode, self.flagUnicodeVar = getcheckbox(self.regexFlagFrame, "Unicode")
 
         # Output frame
         self.outputFrame = Frame(master)
