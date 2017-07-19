@@ -107,27 +107,32 @@ class RegexTestGUI:
         if self.flagUnicodeVar.get() is True:
             regex_flag |= re.UNICODE
 
-        result = re.match(regex_text, input_text, regex_flag)
-        self.outputText.delete(1.0, END)
-        if result:
-            self.outputText.insert(END, result.group(0))
-            self.outputText.insert(END, "\n")
+        try:
+            result = re.match(regex_text, input_text, regex_flag)
+            self.outputText.delete(1.0, END)
+            if result:
+                self.outputText.insert(END, result.group(0))
+                self.outputText.insert(END, "\n")
 
-            for i in range(9):
-                try:
-                    group_text = result.group(i+1)
-                    self.outputGroupCheckbox[i].configure(state='normal')
-                    if self.groupCheckboxVar[i].get():
-                        self.outputText.insert(END, i+1)
-                        self.outputText.insert(END, ": [")
-                        self.outputText.insert(END, group_text)
-                        self.outputText.insert(END, "]\n")
-                except IndexError:
+                for i in range(9):
+                    try:
+                        group_text = result.group(i+1)
+                        self.outputGroupCheckbox[i].configure(state='normal')
+                        if self.groupCheckboxVar[i].get():
+                            self.outputText.insert(END, i+1)
+                            self.outputText.insert(END, ": [")
+                            self.outputText.insert(END, group_text)
+                            self.outputText.insert(END, "]\n")
+                    except IndexError:
+                        self.outputGroupCheckbox[i].configure(state='disabled')
+                        self.groupCheckboxVar[i].set(False)
+            else:
+                for i in range(9):
                     self.outputGroupCheckbox[i].configure(state='disabled')
-                    self.groupCheckboxVar[i].set(False)
-        else:
-            for i in range(9):
-                self.outputGroupCheckbox[i].configure(state='disabled')
+
+        except Exception as error:
+            self.outputText.delete(1.0, END)
+            self.outputText.insert(END, 'Error: '+error.message)
 
 
 root = Tk()
