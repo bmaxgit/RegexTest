@@ -1,6 +1,7 @@
 from Tkinter import *
 import re
 
+
 def get_tag_index(string, start, end):
 
     if string:
@@ -61,7 +62,9 @@ def execute():
                         outputText.insert(END, "]\n")
 
                         # Colorize group match
-                        start_index, end_index = get_tag_index(result.group(0), result.start(group_index + 1), result.end(group_index + 1))
+                        start_index, end_index = get_tag_index(result.group(0),
+                                                               result.start(group_index + 1),
+                                                               result.end(group_index + 1))
                         outputText.tag_add('group1', start_index, end_index)
                         outputText.tag_config('group1', background='yellow', foreground='red')
 
@@ -78,7 +81,7 @@ def execute():
 
 
 # Flag function
-def getcheckbox(parent, name):
+def get_checkbox(parent, name):
     var = BooleanVar(value=False)
     box = Checkbutton(parent, text=name, var=var)
     box.pack(side=LEFT)
@@ -126,10 +129,10 @@ if __name__ == '__main__':
     regexFlagFrame.pack(anchor=W)
 
     # Flags
-    flagMultiline, flagMultilineVar = getcheckbox(regexFlagFrame, "Multiline")
-    flagIgnoreCase, flagIgnoreCaseVar = getcheckbox(regexFlagFrame, "IgnoreCase")
-    flagDotAll, flagDotAllVar = getcheckbox(regexFlagFrame, "DotAll")
-    flagUnicode, flagUnicodeVar = getcheckbox(regexFlagFrame, "Unicode")
+    flagMultiline, flagMultilineVar = get_checkbox(regexFlagFrame, "Multiline")
+    flagIgnoreCase, flagIgnoreCaseVar = get_checkbox(regexFlagFrame, "IgnoreCase")
+    flagDotAll, flagDotAllVar = get_checkbox(regexFlagFrame, "DotAll")
+    flagUnicode, flagUnicodeVar = get_checkbox(regexFlagFrame, "Unicode")
 
     # Output frame
     outputFrame = Frame(root)
