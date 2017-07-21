@@ -1,6 +1,17 @@
 from Tkinter import *
 import re
 
+def get_tags(string, start, end):
+
+    if string:
+        start_tag = '1.0'
+        end_tag = '1.' + str(end)
+    else:
+        start_tag = '0.0'
+        end_tag = '0.0'
+
+    return start_tag, end_tag
+
 
 def execute():
 
