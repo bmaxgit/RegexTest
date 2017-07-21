@@ -63,14 +63,9 @@ def execute():
                         outputText.insert(END, "]\n")
 
                         # Colorize group match
-                        start_index = '1.'+str(result.start(group_index+1))
-                        end_index = '1.'+str(result.end(group_index + 1))
-                        if group_index % 2 is 0:
-                            outputText.tag_add('group0', start_index, end_index)
-                            outputText.tag_config('group0', background='orange', foreground='red')
-                        else:
-                            outputText.tag_add('group1', start_index, end_index)
-                            outputText.tag_config('group1', background='yellow', foreground='red')
+                        start_index, end_index = get_tags(result.group(0), result.start(group_index + 1), result.end(group_index + 1))
+                        outputText.tag_add('group1', start_index, end_index)
+                        outputText.tag_config('group1', background='yellow', foreground='red')
 
                 except IndexError:
                     outputGroupCheckbox[group_index].configure(state='disabled')
