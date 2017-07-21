@@ -4,8 +4,25 @@ import re
 def get_tags(string, start, end):
 
     if string:
-        start_tag = '1.0'
-        end_tag = '1.' + str(end)
+        if start < end:
+            line_num=string.count('\n', 0, start)
+            line_start = string.rfind('\n', 0, start)
+            if line_start == -1:
+                line_start = 0
+            else:
+                line_start += 1
+            start_tag = str(line_num + 1) + '.' + str(start-line_start)
+
+            line_num=string.count('\n', 0, end)
+            line_end = string.rfind('\n', 0, end)
+            if line_end == -1:
+                line_end = 0
+            else:
+                line_end += 1
+            end_tag = str(line_num + 1) + '.' + str(end-line_end)
+        else:
+            start_tag = '1.0'
+            end_tag = '1.0'
     else:
         start_tag = '0.0'
         end_tag = '0.0'
