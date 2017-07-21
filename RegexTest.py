@@ -1,33 +1,31 @@
 from Tkinter import *
 import re
 
-def get_tags(string, start, end):
+def get_tag_index(string, start, end):
 
     if string:
         if start < end:
-            line_num=string.count('\n', 0, start)
-            line_start = string.rfind('\n', 0, start)
-            if line_start == -1:
-                line_start = 0
-            else:
-                line_start += 1
-            start_tag = str(line_num + 1) + '.' + str(start-line_start)
-
-            line_num=string.count('\n', 0, end)
-            line_end = string.rfind('\n', 0, end)
-            if line_end == -1:
-                line_end = 0
-            else:
-                line_end += 1
-            end_tag = str(line_num + 1) + '.' + str(end-line_end)
+            start_index = get_index(start, string)
+            end_index = get_index(end, string)
         else:
-            start_tag = '1.0'
-            end_tag = '1.0'
+            start_index = '1.0'
+            end_index = '1.0'
     else:
-        start_tag = '0.0'
-        end_tag = '0.0'
+        start_index = '0.0'
+        end_index = '0.0'
 
-    return start_tag, end_tag
+    return start_index, end_index
+
+
+def get_index(start, string):
+    line_num = string.count('\n', 0, start)
+    line_start = string.rfind('\n', 0, start)
+    if line_start == -1:
+        line_start = 0
+    else:
+        line_start += 1
+    start_tag = str(line_num + 1) + '.' + str(start - line_start)
+    return start_tag
 
 
 def execute():
@@ -63,7 +61,7 @@ def execute():
                         outputText.insert(END, "]\n")
 
                         # Colorize group match
-                        start_index, end_index = get_tags(result.group(0), result.start(group_index + 1), result.end(group_index + 1))
+                        start_index, end_index = get_tag_index(result.group(0), result.start(group_index + 1), result.end(group_index + 1))
                         outputText.tag_add('group1', start_index, end_index)
                         outputText.tag_config('group1', background='yellow', foreground='red')
 
