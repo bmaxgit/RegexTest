@@ -143,6 +143,7 @@ if __name__ == '__main__':
     outputText.insert(END, "")
     outputText.pack(side=LEFT, fill=BOTH, expand=YES)
     outputText.bind("<Key>", lambda e: "break")
+    outputText.configure(insertwidth=0)
 
     # Output scrollbar
     outputScroll = Scrollbar(outputFrame, command=outputText.yview)
