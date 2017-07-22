@@ -1,19 +1,18 @@
+# coding=utf-8
 from unittest import TestCase
 from RegexTest import get_tag_index
 
-# def get_tag_index(string, start, end):
-#     return start, end
-
 string = '012345678\n012345678\n012345678\n012345678\n0123456789'
 
-class TestGet_tag_index(TestCase):
+
+class TestGetTagIndex(TestCase):
     def test_get_tag_index_all_empty(self):
 
-        string = ''
+        my_string = ''
         start = 0
         end = 0
 
-        start_tag, end_tag = get_tag_index(string, start, end)
+        start_tag, end_tag = get_tag_index(my_string, start, end)
 
         self.assertEqual('0.0', start_tag)
         self.assertEqual('0.0', end_tag)
@@ -40,11 +39,11 @@ class TestGet_tag_index(TestCase):
 
     def test_get_tag_index_no_string_index_0_5(self):
 
-        string = ''
+        my_string = ''
         start = 0
         end = 5
 
-        start_tag, end_tag = get_tag_index(string, start, end)
+        start_tag, end_tag = get_tag_index(my_string, start, end)
 
         self.assertEqual('0.0', start_tag)
         self.assertEqual('0.0', end_tag)
@@ -98,4 +97,3 @@ class TestGet_tag_index(TestCase):
 
         self.assertEqual('3.5', start_tag)
         self.assertEqual('5.5', end_tag)
-
